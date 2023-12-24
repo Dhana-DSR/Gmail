@@ -25,8 +25,9 @@ steps:
     msbuildVersion: '17.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/p:Configuration="$(buildConfiguration)" /p:Platform="$(buildPlatform)" /p:OutputPath=bin\Release'
+    msbuildArguments: '/p:Configuration="$(buildConfiguration)" /p:Platform="$(buildPlatform)" /p:OutputPath=$(Build.ArtifactStagingDirectory)'
     clean: true
+
 
 - task: PublishBuildArtifacts@1
   inputs:
