@@ -22,7 +22,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(Build.ArtifactStagingDirectory)" /p:IncludeServerNamelnBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbo|StorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86))Microsoft Visual Studio\2017\Enterprise Common7\DE\Extensions\Microsoft\Pex"'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(Build.ArtifactStagingDirectory)" /p:IncludeServerNamelnBuildInfo=True /p:GenerateBuildInfoConfigFile=true /p:BuildSymbo|StorePath="$(SymbolPath)" /p:ReferencePath="C:\Program Files (x86))Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\Pex"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
