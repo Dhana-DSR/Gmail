@@ -25,7 +25,7 @@ steps:
     msbuildVersion: '17.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/p:Configuration="$(buildConfiguration)" /p:Platform="$(buildPlatform)" /p:OutputPath=$(Build.ArtifactStagingDirectory) /v:d'
+    msbuildArguments: '/p:Configuration="$(buildConfiguration)" /p:Platform="$(buildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:OutputPath=$(Build.ArtifactStagingDirectory) /v:d'
     clean: true
 
 
