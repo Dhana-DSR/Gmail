@@ -25,7 +25,7 @@ steps:
     msbuildVersion: '17.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArguments: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(Build.ArtifactStagingDirectory)" /p:IncludeServerNamelnBuildInfo=True /p:GenerateBuildInfoConfigFile=true'
+    msbuildArguments: '/p:Configuration="$(buildConfiguration)" /p:Platform="$(buildPlatform)" /p:OutputPath=bin\Release'
     clean: true
 
 - task: PublishBuildArtifacts@1
