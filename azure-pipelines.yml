@@ -23,7 +23,7 @@ steps:
   inputs:
     solution: '**/*.sln'
     msbuildVersion: '17.0'
-    msbuildArguments: '/p:Configuration=$(buildConfiguration) /p:Platform=$(buildPlatform) /p:OutputPath=$(Build.ArtifactStagingDirectory)'
+    msbuildArguments: '/p:Configuration=Release /p:Platform=Any CPU /p:OutputPath=$(Build.ArtifactStagingDirectory)'
     clean: true
 
 - task: PublishBuildArtifacts@1
