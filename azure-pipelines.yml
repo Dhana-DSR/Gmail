@@ -19,13 +19,12 @@ steps:
     restoreSolution: '$(solution)'
     feedsToUse: 'select'
 
-- task: VSBuild@1
+- task: MSBuild@1
   inputs:
-    solution: '$(solution)'
-    vsVersion: '17.0'
-    msbuildArgs: '/p:Configuration=$(buildConfiguration) /p:Platform=$(buildPlatform) /p:OutputPath=$(Build.ArtifactStagingDirectory)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    solution: '**/*.sln'
+    msbuildVersion: '17.0'
+    msbuildArguments: '/p:Configuration=$(buildConfiguration) /p:Platform=$(buildPlatform) /p:OutputPath=$(Build.ArtifactStagingDirectory)'
+    clean: true
 
 - task: PublishBuildArtifacts@1
   inputs:
