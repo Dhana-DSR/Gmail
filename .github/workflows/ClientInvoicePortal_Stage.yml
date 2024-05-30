@@ -69,7 +69,7 @@ jobs:
           name: build
           path: ${{ github.workspace }}/build
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App in Stage
         uses: azure/webapps-deploy@v2
         with:
           app-name: clientbill
