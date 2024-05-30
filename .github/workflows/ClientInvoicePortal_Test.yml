@@ -2,9 +2,9 @@ name: CI/CD For ClientInvoicePortal in Test
 
 on:
   push:
-    branches: [ "sprint-16" ]
+    branches: [ "Test" ]
   pull_request:
-    branches: [ "sprint-16" ]
+    branches: [ "Test" ]
 
 jobs:
   build:
