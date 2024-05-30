@@ -2,9 +2,9 @@ name: CI/CD For ClientInvoicePortal in Stage
 
 on:
   push:
-    branches: [ "none" ]
+    branches: [ "Stage" ]
   pull_request:
-    branches: [ "none" ]
+    branches: [ "Stage" ]
 jobs:
   build:
     name: Build
