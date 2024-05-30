@@ -1,4 +1,4 @@
-name: CI/CD For ClientInvoicePortal in Test
+name: CI/CD Workflow For ClientInvoicePortal in Test
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
     env:
       PHP_VERSION: '7.4'
       ROOT_FOLDER: ${{ github.workspace }}
+      SLOT_NAME: 'test' # Adjust as necessary
 
     steps:
       - name: Checkout code
@@ -27,15 +28,17 @@ jobs:
         run: composer install --no-interaction --prefer-dist --ignore-platform-req=ext-intl --ignore-platform-req=php
         working-directory: ${{ env.ROOT_FOLDER }}
 
-      - name: Download env file
-        uses: actions/download-secure-file@v1
+      - name: Upload env file
+        uses: actions/upload-artifact@v3
         with:
-          file_id: ${{ secrets.SLOT_NAME_ENV }}
+          name: env-file
+          path: .env
 
-      - name: Copy env file
-        run: |
-          mkdir -p ${{ github.workspace }}/.env
-          cp ${{ github.workspace }}/env ${{ github.workspace }}/$(SLOT_NAME).env
+      - name: Download env file
+        uses: actions/download-artifact@v3
+        with:
+          name: env-file
+          path: ${{ github.workspace }}
 
       - name: Rename env from repository
         run: |
@@ -58,7 +61,7 @@ jobs:
           path: ${{ github.workspace }}/build/${{ github.run_id }}.zip
 
   deploy:
-    name: Deploy Web App
+    name: Deploy Web App in Test Env
     needs: build
     runs-on: windows-latest
     environment: Test
@@ -73,11 +76,10 @@ jobs:
           name: build
           path: ${{ github.workspace }}/build
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App in Test Env
         uses: azure/webapps-deploy@v2
         with:
           app-name: clientbill
           slot-name: test
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ github.workspace }}/build/${{ github.run_id }}.zip
-          
