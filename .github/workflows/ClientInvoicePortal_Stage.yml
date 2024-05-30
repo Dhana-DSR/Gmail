@@ -1,4 +1,4 @@
-name: CI/CD Workflow For ClientInvoicePortal in Stage
+name: CI/CD For ClientInvoicePortal in Stage
 
 on:
   push:
