@@ -2,9 +2,9 @@ name: CI/CD Workflow For ClientInvoicePortal in Test
 
 on:
   push:
-    branches: [ "Test" ]
+    branches: [ "none" ]
   pull_request:
-    branches: [ "Test" ]
+    branches: [ "none" ]
 
 jobs:
   build:
