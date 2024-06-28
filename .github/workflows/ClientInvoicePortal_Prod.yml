@@ -3,7 +3,7 @@ name: ClientInvoicePortal in Prod
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "None" ]
   pull_request:
     branches: [ "None" ]
 jobs:
