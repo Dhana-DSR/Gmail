@@ -1,4 +1,4 @@
-name: CI/CD Workflow For ClientInvoicePortal in Test
+name: ClientInvoicePortal in Test
 
 on:
   workflow_dispatch:
