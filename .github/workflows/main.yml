@@ -1,0 +1,82 @@
+name: CI/CD Workflow For ClientInvoicePortal in Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    env:
+      PHP_VERSION: '7.4'
+      ROOT_FOLDER: ${{ github.workspace }}
+      SLOT_NAME: 'test' # Adjust as necessary
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        run: |
+          choco install php --version %PHP_VERSION%
+          php -v
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --ignore-platform-req=ext-intl --ignore-platform-req=php
+        working-directory: ${{ env.ROOT_FOLDER }}
+
+      - name: Upload env file
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-file
+          path: .env
+
+      - name: Download env file
+        uses: actions/download-artifact@v3
+        with:
+          name: env-file
+          path: ${{ github.workspace }}
+
+      - name: Rename env from repository
+        run: |
+          if [ -f ${{ github.workspace }}/.env ]; then
+            mv ${{ github.workspace }}/.env ${{ github.workspace }}/env.old
+          fi
+
+      - name: Rename slot env file
+        run: mv ${{ github.workspace }}/$(SLOT_NAME).env ${{ github.workspace }}/.env
+
+      - name: Archive files
+        run: |
+          mkdir -p ${{ github.workspace }}/build
+          zip -r ${{ github.workspace }}/build/${{ github.run_id }}.zip ${{ env.ROOT_FOLDER }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: ${{ github.workspace }}/build/${{ github.run_id }}.zip
+
+  deploy:
+    name: Deploy Web App in Test Env
+    needs: build
+    runs-on: windows-latest
+    environment: Test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: ${{ github.workspace }}/build
+
+      - name: Deploy to Azure Web App in Test Env
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: clientbill
+          slot-name: test
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ github.workspace }}/build/${{ github.run_id }}.zip
